@@ -63,4 +63,4 @@ The automation above first makes a snapshot at 3am, and then at 3.30am uploads t
 
 Contact: jperquin@perquin.net
 
-Credits: Based on 
+Credits: Based on rrostt/hassio-backup-s3
