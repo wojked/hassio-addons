@@ -61,6 +61,6 @@ You could automate this using Automation:
 
 The automation above first makes a snapshot at 3am, and then at 3.30am uploads to S3.
 
-Contact: jperquin@perquin.net
+Contact: j.perquin@perquin.net
 
 Credits: Based on rrostt/hassio-backup-s3
