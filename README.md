@@ -6,20 +6,29 @@ Add-on for uploading hass.io snapshots to AWS S3.
 
 Save files in /addons/buckets3 on your hassio machine.
 
-Under the Add-on Store tab in the Hass.io view in HA you'll find the addon under Local add-ons.
+Under the Add-on Store tab in the Hass.io Supervisor view in HA add this repo as an add-on repository: https://github.com/jperquin/hassio-backup-s3.
 
-Install, then set the config variables. You should create an s3-bucket, and create a user with IAM policy rights to upload an object to the bucket.
+Install, then set the config variables that you obtained from setting up the AWS account, user and bucket (see below):
+awskey: `access key id`
+awssecret: `secret access key`
+bucketname: `AWS S3 bucket name`
 
-Note: awskey is `access key id` and awssecret is `secret access key` in AWS lingo.
+Steps to setting up an Amazon AWS account:
+1. Go to https://portal.aws.amazon.com/billing/signup#/start
 
-Next,
+2. Create a bucket following the standard settings (any name will do):
+https://s3.console.aws.amazon.com/s3/
 
-1. Create a Snapshot in the hass.io view in HA.
-2. Click Start on the Backup S3 add-on.
+Note the AWS S3 Bucket name
 
-This will sync the /backup/ directory to the s3-bucket.
+3. Create a specific user with AmazonS3FullAccess rights
+https://console.aws.amazon.com/iam
 
-Ideally you would automate this using automation:
+Make sure that after completing the user creation wizard you note down the Access key ID and Secret Access Key. Especially the Secret Access Key will only be displayed once..
+
+To sync your HASSIO backup folder with AWS just click START in this add-on. It will keep a synced cloud-copy, so any purged backup files will not be kept in your bucket either. 
+
+You could automate this using Automation:
 
 ```
 # backups
@@ -52,4 +61,6 @@ Ideally you would automate this using automation:
 
 The automation above first makes a snapshot at 3am, and then at 3.30am uploads to S3.
 
-Contact: rrostt@gmail.com
+Contact: jperquin@perquin.net
+
+Credits: Based on 
