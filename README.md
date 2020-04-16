@@ -58,8 +58,14 @@ You could automate this using Automation:
     data:
       addon: local_backup_s3
 ```
-
 The automation above first makes a snapshot at 3am, and then at 3.30am uploads to S3.
+
+# Alternative Backup solution
+I really like this community integration too:
+https://github.com/jcwillox/hass-auto-backup
+
+Once installed, it can be easily adapted to run alongside this addon.
+
 
 Contact: j.perquin@perquin.net
 
