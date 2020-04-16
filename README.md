@@ -4,8 +4,6 @@ Add-on for uploading hass.io snapshots to AWS S3.
 
 ## Installation
 
-Save files in /addons/buckets3 on your hassio machine.
-
 Under the Add-on Store tab in the Hass.io Supervisor view in HA add this repo as an add-on repository: https://github.com/jperquin/hassio-backup-s3.
 
 Install, then set the config variables that you obtained from setting up the AWS account, user and bucket (see below):
@@ -26,6 +24,8 @@ https://console.aws.amazon.com/iam
 
 Make sure that after completing the user creation wizard you note down the Access key ID and Secret Access Key. Especially the Secret Access Key will only be displayed once..
 
+
+## Usage
 To sync your HASSIO backup folder with AWS just click START in this add-on. It will keep a synced cloud-copy, so any purged backup files will not be kept in your bucket either. 
 
 You could automate this using Automation:
