@@ -4,14 +4,8 @@ FROM $BUILD_FROM
 ENV LANG C.UTF-8
 
 # add aws-cli and deps
-RUN apk -v --update --no-cache add \
-        py-pip \
-        groff \
-        less \
-        mailcap \
-        && \
-    pip install --upgrade awscli==1.14.5 s3cmd==2.0.1 python-magic && \
-    apk -v --purge del py-pip
+RUN apk -v --update --no-cache add py-pip
+RUN pip install awscli
 RUN apk add jq
 
 # Copy data for add-on
