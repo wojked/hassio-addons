@@ -22,11 +22,35 @@ Note the AWS S3 Bucket name
 3. Create a specific user with AmazonS3FullAccess rights
 https://console.aws.amazon.com/iam
 
-Make sure that after completing the user creation wizard you note down the Access key ID and Secret Access Key. Especially the Secret Access Key will only be displayed once..
+Make sure that after completing the user creation wizard you note down the Access key ID and Secret Access Key. Especially the Secret Access Key will only be displayed once.
+
+The policy should look something like:
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "s3:PutObject",
+                "s3:AbortMultipartUpload",
+                "s3:ListBucket",
+                "s3:ListMultipartUploadParts"
+            ],
+            "Resource": [
+                "arn:aws:s3:::MYBUCKETHERE",
+                "arn:aws:s3:::MYBUCKETHERE/*"
+            ]
+        }
+    ]
+}
+```
 
 
 ## Usage
-To sync your HASSIO backup folder with AWS just click START in this add-on. It will keep a synced cloud-copy, so any purged backup files will not be kept in your bucket either. 
+To sync your HASSIO backup folder with AWS just click START in this add-on. It will keep a synced cloud-copy, so any purged backup files will not be kept in your bucket either.
 
 You could automate this using Automation:
 
@@ -66,7 +90,6 @@ https://github.com/jcwillox/hass-auto-backup
 
 Once installed, it can be easily adapted to run alongside this addon.
 
+Contact: hello@mikebell.io
 
-Contact: j.perquin@perquin.net
-
-Credits: Based on rrostt/hassio-backup-s3
+Credits: Based on jperquin/hassio-backup-s3 based on rrostt/hassio-backup-s3
