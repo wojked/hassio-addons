@@ -7,9 +7,10 @@ Add-on for uploading hass.io snapshots to AWS S3.
 Under the Add-on Store tab in the Hass.io Supervisor view in HA add this repo as an add-on repository: `https://github.com/mikebell/hassio-backup-s3`.
 
 Install, then set the config variables that you obtained from setting up the AWS account, user and bucket (see below):
-awskey: `access key id`
-awssecret: `secret access key`
-bucketname: `AWS S3 bucket name`
+* awskey: `access key id`
+* awssecret: `secret access key`
+* bucketname: `AWS S3 bucket name`
+* backuppath: `path to your backups` defaults to `/backup/`
 
 Steps to setting up an Amazon AWS account:
 1. Go to https://portal.aws.amazon.com/billing/signup#/start
@@ -89,10 +90,12 @@ The automation above first makes a snapshot at 3am, and then at 3.30am uploads t
 Please post an issue on this repo with your full log.
 
 ## Alternative Backup solution
-I really like this community integration too:
+
+### Hass Auto Backup
+
 https://github.com/jcwillox/hass-auto-backup
 
-Once installed, it can be easily adapted to run alongside this addon.
+Once installed, you can configure the `backuppath` to a location hass-auto-backup can write to such as `/share/`.
 
 Contact: hello@mikebell.io
 

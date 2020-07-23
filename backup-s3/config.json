@@ -1,6 +1,6 @@
 {
   "name": "Backup S3",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "slug": "backup_s3",
   "description": "Backup config to S3 bucket",
   "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
@@ -9,7 +9,8 @@
   "options": {
     "awskey": "",
     "awssecret": "",
-    "bucketname": ""
+    "bucketname": "",
+    "backuppath": "/backup/"
   },
   "schema": {
     "awskey": "str",
