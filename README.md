@@ -36,7 +36,9 @@ The policy should look something like:
             "Action": [
                 "s3:PutObject",
                 "s3:AbortMultipartUpload",
+                "s3:DeleteObjectVersion",
                 "s3:ListBucket",
+                "s3:DeleteObject",
                 "s3:ListMultipartUploadParts"
             ],
             "Resource": [
