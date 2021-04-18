@@ -11,7 +11,7 @@ USE_NAME=$(jq -r .usename $CONFIG_PATH)
 BACKUP_PATH="/backup"
 SYMLINKS_PATH="/symlinks"
 SNAPSHOT_FILE="snapshot.json"
-SNAPSHOT_FILE_PATH="$(pwd)/$SNAPSHOT_FILE"
+SNAPSHOT_FILE_PATH="/$SNAPSHOT_FILE"
 
 JQ_NAME=".name" # format: "PREFIX: KEY"
 
@@ -38,9 +38,9 @@ cleanup() {
 }
 
 format_str() {
-  local str1=${1%%*( )}
-  local str2=${str1// /_}
-  echo "$str2"
+  local str=${1##*( )}
+  local str=${str// /-}
+  echo "$str"
 }
 
 create_symlinks() {
@@ -52,14 +52,11 @@ create_symlinks() {
     prefix_raw=$(get_prefix "$name_raw" ':')
 
     name_length=${#name_raw}
-    cut_length=$((${#prefix_raw} + 1))
-
-    log "SNAPSHOT_FILE_PATH: $SNAPSHOT_FILE_PATH"
-    log "prefix_raw: $prefix_raw name_raw: $name_raw"
-    log "cut_length: $cut_length name_length: $name_length"
+    prefix_length=${#prefix_raw}
+    cut_length=$((prefix_length + 1)) # +1 in order to include the delimiter
 
     # Ignore files without prefix
-    if [[ "$cut_length" == "$name_length" ]]; then
+    if [[ "$prefix_length" == "$name_length" ]]; then
       log "Skipping \"$name_raw\""
       log "Please use the following format: \"PREFIX: KEY\""
       log "Example: \"DailyBackup: Backup1\""
@@ -72,13 +69,11 @@ create_symlinks() {
     name=$(format_str "${name_raw:cut_length}")
     prefix=$(format_str "$prefix_raw")
 
-    log "prefix: $prefix name: $name"
-
     # Create Symlink
     mkdir -p "$SYMLINKS_PATH/$prefix"
     ln -s "$filename" "$SYMLINKS_PATH/$prefix/$name.tar"
 
-    log "file: $filename link: $SYMLINKS_PATH/$prefix/$name.tar"
+    log "Creating Symlink: $SYMLINKS_PATH/$prefix/$name.tar"
 
     # Cleanup
     rm -f "$SNAPSHOT_FILE_PATH"
