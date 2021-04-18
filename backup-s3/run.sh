@@ -48,7 +48,7 @@ create_symlinks() {
     snapshot_json=$(tar -tf "$filename" | grep snapshot.json)
     tar -xf "$filename" "$snapshot_json"
 
-    name_raw=$(jq -r $JQ_NAME $SNAPSHOT_FILE_PATH)
+    name_raw=$(jq -r $JQ_NAME "$SNAPSHOT_FILE_PATH")
     prefix_raw=$(get_prefix "$name_raw" ':')
 
     name_length=${#name_raw}
@@ -65,23 +65,23 @@ create_symlinks() {
       log "Example: \"DailyBackup: Backup1\""
       log "Result: \"My-Bucket/DailyBackup/Backup1.tar\""
 
-      rm -f $SNAPSHOT_FILE_PATH
+      rm -f "$SNAPSHOT_FILE_PATH"
       continue
     fi
 
-    name=$(format_str ${name_raw:cut_length})
-    prefix=$(format_str $prefix_raw)
+    name=$(format_str "${name_raw:cut_length}")
+    prefix=$(format_str "$prefix_raw")
 
     log "prefix: $prefix name: $name"
 
     # Create Symlink
     mkdir -p "$SYMLINKS_PATH/$prefix"
-    ln -s $filename" "$SYMLINKS_PATH/$prefix/$name.tar"
+    ln -s "$filename" "$SYMLINKS_PATH/$prefix/$name.tar"
 
     log "file: $filename link: $SYMLINKS_PATH/$prefix/$name.tar"
 
     # Cleanup
-    rm -f $SNAPSHOT_FILE_PATH
+    rm -f "$SNAPSHOT_FILE_PATH"
   done
 }
 
