@@ -11,7 +11,7 @@ USE_NAME=$(jq -r .usename $CONFIG_PATH)
 BACKUP_PATH="/backup"
 SYMLINKS_PATH="/symlinks"
 SNAPSHOT_FILE="snapshot.json"
-SNAPSHOT_FILE_PATH="$BACKUP_PATH/$SNAPSHOT_FILE"
+SNAPSHOT_FILE_PATH="$(pwd)/$SNAPSHOT_FILE"
 
 JQ_NAME=".name" # format: "PREFIX: KEY"
 
