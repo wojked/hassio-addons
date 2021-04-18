@@ -38,7 +38,7 @@ cleanup() {
 }
 
 format_str() {
-  local str=${1#*( )}
+  local str=$(echo "$1" | xargs)
   local str=${str// /-}
   echo "$str"
 }
