@@ -40,11 +40,15 @@ cleanup() {
 create_symlinks() {
   for filename in "$BACKUP_PATH"/*.tar; do
     snapshot_json=$(tar -tf "$filename" | grep snapshot.json)
-    tar -xvf "$filename" "$snapshot_json"
+    tar -xf "$filename" "$snapshot_json"
 
     name=$(jq -r $JQ_NAME $SNAPSHOT_FILE_PATH)
     prefix=$(get_prefix "$name" ':')
     cut_length=$((${#prefix} + 1))
+
+    log "SNAPSHOT_FILE_PATH: $SNAPSHOT_FILE_PATH"
+    log "prefix: $prefix name: $prefix"
+    log "cut_length: $cut_length"
 
     # Ignore files without prefix
     if [[ "$cut_length" == 1 ]]; then
@@ -55,6 +59,8 @@ create_symlinks() {
     # Create Symlink
     mkdir -p "$SYMLINKS_PATH/$prefix"
     ln -s "$BACKUP_PATH/$filename" "$SYMLINKS_PATH/$prefix/${name:cut_length}.tar"
+
+    log "file: $BACKUP_PATH/$filename link: $SYMLINKS_PATH/$prefix/${name:cut_length}.tar"
 
     # Cleanup
     rm -f $SNAPSHOT_FILE_PATH
