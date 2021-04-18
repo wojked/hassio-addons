@@ -1,20 +1,22 @@
 {
   "name": "Backup S3",
-  "version": "2.2.2",
+  "version": "2.3.0",
   "slug": "backup_s3",
   "description": "Backup config to S3 bucket",
   "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
   "startup": "once",
   "boot": "auto",
   "options": {
-    "awskey": "",
-    "awssecret": "",
-    "bucketname": ""
+    "awskey": "My-Access-Key",
+    "awssecret": "My-Secret",
+    "bucketname": "My-Bucket",
+    "usename": "true"
   },
   "schema": {
     "awskey": "str",
     "awssecret": "str",
-    "bucketname": "str"
+    "bucketname": "str",
+    "usename": "bool"
   },
   "map": ["backup:rw"]
 }
