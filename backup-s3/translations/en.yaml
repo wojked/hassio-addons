@@ -1,0 +1,13 @@
+configuration:
+  awskey:
+    name: AWS Access Key ID
+    description: Please enter your Access Key ID in this input field.
+  awssecret:
+    name: AWS Secret Access Key
+    description: Please enter the Secret for your Access Key
+  bucketname:
+    name: Bucket name
+    description: Please enter the name of the S3 Bucket
+  usename:
+    name: Use Snapshot name
+    description: "Enable this feature if you want to use the name of the Snapshot for storing the tar file in the Bucket. Snapshot name format: PREFIX: KEY Example: DailyBackup: Backup1 -> AWS path: BUCKET/DailyBackup/Backup1.tar"
