@@ -39,7 +39,8 @@ cleanup() {
 
 create_symlinks() {
   for filename in "$BACKUP_PATH"/*.tar; do
-    tar -zxvf "$filename" $SNAPSHOT_FILE
+    snapshot_json=$(tar -tf "$filename" | grep snapshot.json)
+    tar -xvf "$filename" "$snapshot_json"
 
     name=$(jq -r $JQ_NAME $SNAPSHOT_FILE_PATH)
     prefix=$(get_prefix "$name" ':')
