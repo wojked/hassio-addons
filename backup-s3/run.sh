@@ -37,30 +37,48 @@ cleanup() {
   rm -rf "$SYMLINKS_PATH"
 }
 
+format_str() {
+  local str1=${1%%*( )}
+  local str2=${str1// /_}
+  echo "$str2"
+}
+
 create_symlinks() {
   for filename in "$BACKUP_PATH"/*.tar; do
     snapshot_json=$(tar -tf "$filename" | grep snapshot.json)
     tar -xf "$filename" "$snapshot_json"
 
-    name=$(jq -r $JQ_NAME $SNAPSHOT_FILE_PATH)
-    prefix=$(get_prefix "$name" ':')
-    cut_length=$((${#prefix} + 1))
+    name_raw=$(jq -r $JQ_NAME $SNAPSHOT_FILE_PATH)
+    prefix_raw=$(get_prefix "$name_raw" ':')
+
+    name_length=${#name_raw}
+    cut_length=$((${#prefix_raw} + 1))
 
     log "SNAPSHOT_FILE_PATH: $SNAPSHOT_FILE_PATH"
-    log "prefix: $prefix name: $prefix"
-    log "cut_length: $cut_length"
+    log "prefix_raw: $prefix_raw name_raw: $name_raw"
+    log "cut_length: $cut_length name_length: $name_length"
 
     # Ignore files without prefix
-    if [[ "$cut_length" == 1 ]]; then
+    if [[ "$cut_length" == "$name_length" ]]; then
+      log "Skipping \"$name_raw\""
+      log "Please use the following format: \"PREFIX: KEY\""
+      log "Example: \"DailyBackup: Backup1\""
+      log "Result: \"My-Bucket/DailyBackup/Backup1.tar\""
+
       rm -f $SNAPSHOT_FILE_PATH
       continue
     fi
 
+    name=$(format_str ${name_raw:cut_length})
+    prefix=$(format_str $prefix_raw)
+
+    log "prefix: $prefix name: $name"
+
     # Create Symlink
     mkdir -p "$SYMLINKS_PATH/$prefix"
-    ln -s "$BACKUP_PATH/$filename" "$SYMLINKS_PATH/$prefix/${name:cut_length}.tar"
+    ln -s $filename" "$SYMLINKS_PATH/$prefix/$name.tar"
 
-    log "file: $BACKUP_PATH/$filename link: $SYMLINKS_PATH/$prefix/${name:cut_length}.tar"
+    log "file: $filename link: $SYMLINKS_PATH/$prefix/$name.tar"
 
     # Cleanup
     rm -f $SNAPSHOT_FILE_PATH
