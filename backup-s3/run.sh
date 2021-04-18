@@ -3,11 +3,10 @@
 #### VARIABLES ####
 
 CONFIG_PATH=/data/options.json
-
-KEY=$(bashio::config 'awskey')
-SECRET=$(bashio::config 'awssecret')
-BUCKET=$(bashio::config 'bucketname')
-USE_NAME=$(bashio::config 'usename')
+KEY=$(jq -r .awskey $CONFIG_PATH)
+SECRET=$(jq -r .awssecret $CONFIG_PATH)
+BUCKET=$(jq -r .bucketname $CONFIG_PATH)
+USE_NAME=$(jq -r .usename $CONFIG_PATH)
 
 BACKUP_PATH="/backup"
 SYMLINKS_PATH="/symlinks"
@@ -70,7 +69,7 @@ log "Configuring AWS credentials"
 aws configure set aws_access_key_id "$KEY"
 aws configure set aws_secret_access_key "$SECRET"
 
-if [[ -n "$USE_NAME" ]]; then
+if [[ "$USE_NAME" == "true" ]]; then
   log "Using Snapshots names"
   # Cleanup of previous runs
   cleanup
