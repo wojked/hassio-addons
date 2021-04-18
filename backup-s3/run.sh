@@ -38,7 +38,7 @@ cleanup() {
 }
 
 format_str() {
-  local str=${1##*( )}
+  local str=${1#*( )}
   local str=${str// /-}
   echo "$str"
 }
@@ -58,9 +58,10 @@ create_symlinks() {
     # Ignore files without prefix
     if [[ "$prefix_length" == "$name_length" ]]; then
       log "Skipping \"$name_raw\""
-      log "Please use the following format: \"PREFIX: KEY\""
-      log "Example: \"DailyBackup: Backup1\""
-      log "Result: \"My-Bucket/DailyBackup/Backup1.tar\""
+      log "   Please use the following format: \"PREFIX: KEY\""
+      log "   Example: \"DailyBackup: Backup1\""
+      log "   Result: \"My-Bucket/DailyBackup/Backup1.tar\""
+      log " "
 
       rm -f "$SNAPSHOT_FILE_PATH"
       continue
