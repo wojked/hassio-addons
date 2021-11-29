@@ -1,8 +1,15 @@
-# Hassio Addon for Backing up to S3 Bucket
+# Hassio Addons
+
+Overview:
+- Backup S3
+- librespot-java
+
+---
+## Backup S3
 
 Add-on for uploading hass.io snapshots to AWS S3.
 
-## Installation
+### Installation
 
 Under the Add-on Store tab in the Hass.io Supervisor view in HA add this repo as an add-on repository: `https://github.com/AlexanderBabel/hassio-backup-s3`.
 
@@ -51,7 +58,7 @@ The policy should look something like:
 }
 ```
 
-## Usage
+### Usage
 
 To sync your HASSIO backup folder with AWS just click START in this add-on. It will keep a synced cloud-copy, so any purged backup files will not be kept in your bucket either.
 
@@ -88,11 +95,11 @@ You could automate this using Automation:
 
 The automation above first makes a snapshot at 3am, and then at 3.30am uploads to S3.
 
-## Help and Debug
+### Help and Debug
 
 Please post an issue on this repo with your full log.
 
-## Alternative Backup solution
+### Alternative Backup solution
 
 I really like this community integration too:
 [hass-auto-backup](https://github.com/jcwillox/hass-auto-backup)
