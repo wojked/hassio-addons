@@ -6,12 +6,13 @@ CONFIG_PATH=/data/options.json
 KEY=$(jq -r .awskey $CONFIG_PATH)
 SECRET=$(jq -r .awssecret $CONFIG_PATH)
 BUCKET=$(jq -r .bucketname $CONFIG_PATH)
+ENDPOINT=$(jq -r .endpoint $CONFIG_PATH)
 USE_NAME=$(jq -r .usename $CONFIG_PATH)
 
 BACKUP_PATH="/backup"
 SYMLINKS_PATH="/symlinks"
-SNAPSHOT_FILE="snapshot.json"
-SNAPSHOT_FILE_PATH="/$SNAPSHOT_FILE"
+BACKUP_FILE="backup.json"
+BACKUP_FILE_PATH="/$BACKUP_FILE"
 
 JQ_NAME=".name" # format: "PREFIX: KEY"
 
@@ -33,7 +34,7 @@ get_prefix() {
 }
 
 cleanup() {
-  rm -f "$SNAPSHOT_FILE_PATH*"
+  rm -f "$BACKUP_FILE_PATH*"
   rm -rf "$SYMLINKS_PATH"
 }
 
@@ -45,10 +46,10 @@ format_str() {
 
 create_symlinks() {
   for filename in "$BACKUP_PATH"/*.tar; do
-    snapshot_json=$(tar -tf "$filename" | grep snapshot.json)
-    tar -xf "$filename" "$snapshot_json"
+    backup_json=$(tar -tf "$filename" | grep $BACKUP_FILE)
+    tar -xf "$filename" "$backup_json"
 
-    name_raw=$(jq -r $JQ_NAME "$SNAPSHOT_FILE_PATH")
+    name_raw=$(jq -r $JQ_NAME "$BACKUP_FILE_PATH")
     prefix_raw=$(get_prefix "$name_raw" ':')
 
     name_length=${#name_raw}
@@ -63,7 +64,7 @@ create_symlinks() {
       log "   Result: \"My-Bucket/DailyBackup/Backup1.tar\""
       log " "
 
-      rm -f "$SNAPSHOT_FILE_PATH"
+      rm -f "$BACKUP_FILE_PATH"
       continue
     fi
 
@@ -77,12 +78,11 @@ create_symlinks() {
     log "Creating Symlink: $SYMLINKS_PATH/$prefix/$name.tar"
 
     # Cleanup
-    rm -f "$SNAPSHOT_FILE_PATH"
+    rm -f "$BACKUP_FILE_PATH"
   done
 }
 
 #### END FUNCTIONS ####
-
 
 log "Starting Sync"
 
@@ -90,8 +90,12 @@ log "Configuring AWS credentials"
 aws configure set aws_access_key_id "$KEY"
 aws configure set aws_secret_access_key "$SECRET"
 
+if [[ -n "$ENDPOINT" ]]; then
+  EXTRA="--endpoint-url=$ENDPOINT"
+fi
+
 if [[ "$USE_NAME" == "true" ]]; then
-  log "Using Snapshots names"
+  log "Using Backup names"
   # Cleanup of previous runs
   cleanup
 
@@ -99,13 +103,13 @@ if [[ "$USE_NAME" == "true" ]]; then
   create_symlinks
 
   log "Syncing Backup Archives"
-  aws s3 sync "$SYMLINKS_PATH" "s3://$BUCKET/" --quiet
+  aws "$EXTRA" s3 sync "$SYMLINKS_PATH" "s3://$BUCKET/" --quiet
 
   cleanup
 else
-  log "Continuing without Snapshot names"
+  log "Continuing without Backup names"
   log "Syncing Backup Archives"
-  aws s3 sync "$BACKUP_PATH" "s3://$BUCKET/" --quiet
+  aws "$EXTRA" s3 sync "$BACKUP_PATH" "s3://$BUCKET/" --quiet
 fi
 
 log "Done"

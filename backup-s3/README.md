@@ -1,6 +1,6 @@
 # Hassio Addon for Backing up to S3 Bucket
 
-Add-on for uploading hass.io snapshots to AWS S3.
+Add-on for uploading hass.io backups to AWS S3.
 
 ## Installation
 
@@ -59,7 +59,7 @@ You could automate this using Automation:
 
 ```yaml
 # backups
-- alias: Make snapshot
+- alias: Make backup
   trigger:
     platform: time
     at: "3:00:00"
@@ -68,7 +68,7 @@ You could automate this using Automation:
     weekday:
       - mon
   action:
-    service: hassio.snapshot_full
+    service: hassio.backup_full
     data_template:
       name: Automated Backup {{ now().strftime('%Y-%m-%d') }}
 
@@ -86,7 +86,7 @@ You could automate this using Automation:
       addon: local_backup_s3
 ```
 
-The automation above first makes a snapshot at 3am, and then at 3.30am uploads to S3.
+The automation above first makes a backup at 3am, and then at 3.30am uploads to S3.
 
 ## Help and Debug
 

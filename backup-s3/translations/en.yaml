@@ -6,8 +6,11 @@ configuration:
     name: AWS Secret Access Key
     description: Please enter the Secret for your Access Key
   bucketname:
-    name: Bucket name
+    name: Bucket Name
     description: Please enter the name of the S3 Bucket
+  endpoint:
+    name: S3 Endpoint
+    description: Enter an alternative endpoint if applicable
   usename:
-    name: Use Snapshot name
+    name: Use Snapshot Name
     description: "Enable this feature if you want to use the name of the Snapshot for storing the tar file in the Bucket. Snapshot name format: PREFIX: KEY Example: DailyBackup: Backup1 -> AWS path: BUCKET/DailyBackup/Backup1.tar"
