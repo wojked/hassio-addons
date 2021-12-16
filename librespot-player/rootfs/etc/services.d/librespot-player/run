@@ -1,0 +1,23 @@
+#!/usr/bin/with-contenv bashio
+# ==============================================================================
+# Home Assistant Community Add-on: Example
+# Runs example1 script
+# ==============================================================================
+
+
+bashio::log.info "Starting librespot player..."
+
+mkdir -p /config/librespot-player /share/owntone/music/
+
+if [ -p /share/owntone/music/librespot-java ]; then
+    rm /share/owntone/music/librespot-java
+fi
+
+if [ -p /share/owntone/music/librespot-java.metadata ]; then
+    rm /share/owntone/music/librespot-java.metadata
+fi
+
+mkfifo /share/owntone/music/librespot-java
+mkfifo /share/owntone/music/librespot-java.metadata
+
+exec java -jar /bin/librespot-player.jar --conf-file=/config/librespot-player/config.toml
