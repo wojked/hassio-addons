@@ -1,15 +1,8 @@
 ARG BUILD_FROM=ghcr.io/hassio-addons/base/aarch64:11.0.0
-# hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
 # Copy root filesystem
 COPY rootfs /
-
-# Setup base
-RUN apk add --no-cache \
-    coreutils \
-    wget \
-    openjdk11
 
 # Build arguments
 ARG LIBRESPOT_JAVA_VERSION=1.6.2
@@ -21,7 +14,10 @@ ARG BUILD_REF
 ARG BUILD_REPOSITORY
 ARG BUILD_VERSION
 
-RUN wget https://github.com/librespot-org/librespot-java/releases/download/v${LIBRESPOT_JAVA_VERSION}/librespot-player-${LIBRESPOT_JAVA_VERSION}.jar -O /bin/librespot-player.jar
+
+# Install openjdk and librespot-player
+RUN apk add --no-cache openjdk11 && \
+    wget https://github.com/librespot-org/librespot-java/releases/download/v${LIBRESPOT_JAVA_VERSION}/librespot-player-${LIBRESPOT_JAVA_VERSION}.jar -O /bin/librespot-player.jar
 
 # Labels
 LABEL \
