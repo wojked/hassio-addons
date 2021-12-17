@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 #### VARIABLES ####
 
@@ -7,6 +7,7 @@ KEY=$(jq -r .awskey $CONFIG_PATH)
 SECRET=$(jq -r .awssecret $CONFIG_PATH)
 BUCKET=$(jq -r .bucketname $CONFIG_PATH)
 ENDPOINT=$(jq -r .endpoint $CONFIG_PATH)
+CHECK_URL=$(jq -r .checkurl $CONFIG_PATH)
 USE_NAME=$(jq -r .usename $CONFIG_PATH)
 
 BACKUP_PATH="/backup"
@@ -110,6 +111,10 @@ else
   log "Continuing without Backup names"
   log "Syncing Backup Archives"
   aws "$EXTRA" s3 sync "$BACKUP_PATH" "s3://$BUCKET/" --quiet
+fi
+
+if [[ -n "$CHECK_URL" ]]; then
+  curl -fsS -m 10 --retry 5 -o /dev/null "$CHECK_URL"
 fi
 
 log "Done"

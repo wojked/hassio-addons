@@ -1,6 +1,6 @@
 {
   "name": "Backup S3",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "slug": "backup-s3",
   "description": "Backup config to S3 bucket",
   "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
@@ -8,9 +8,10 @@
   "boot": "auto",
   "options": {
     "awskey": "My-Access-Key",
-    "awssecret": "My-Secret",
+    "awssecret": "",
     "bucketname": "My-Bucket",
-    "endpoint": "Endpoint",
+    "endpoint": "",
+    "checkurl": "",
     "usename": "true"
   },
   "schema": {
@@ -18,6 +19,7 @@
     "awssecret": "str",
     "bucketname": "str",
     "endpoint": "str",
+    "checkurl": "str",
     "usename": "bool"
   },
   "map": ["backup:rw"]

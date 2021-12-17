@@ -11,6 +11,9 @@ configuration:
   endpoint:
     name: S3 Endpoint
     description: Enter an alternative endpoint if applicable
+  checkurl:
+    name: Check URL
+    description: "A URL that should be pinged, after the sync in over. Can be use in combination with healthchecks.io"
   usename:
     name: Use Snapshot Name
     description: "Enable this feature if you want to use the name of the Snapshot for storing the tar file in the Bucket. Snapshot name format: PREFIX: KEY Example: DailyBackup: Backup1 -> AWS path: BUCKET/DailyBackup/Backup1.tar"
