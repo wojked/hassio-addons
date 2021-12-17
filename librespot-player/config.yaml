@@ -1,6 +1,6 @@
 ---
 name: librespot player
-version: 1.1.0
+version: 1.1.1
 slug: librespot-player
 description: Example add-on by Community Home Assistant Add-ons
 url: https://github.com/AlexanderBabel/hassio-addons
@@ -19,5 +19,5 @@ options:
   pipe: /share/owntone/music/librespot-java
   metadatapipe: /share/owntone/music/librespot-java.metadata
 schema:
-  pipe: str
-  metadatapipe: str
+  pipe: str?
+  metadatapipe: str?
