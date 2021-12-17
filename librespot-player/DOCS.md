@@ -8,7 +8,11 @@ It can be used in combination with owntone-server. It tries to create a pipe in 
 
 The addon can be installed by adding this repo to Home Assistant. After that librespot-player can be installed through the list of available addons.
 
+You should also install owntone (https://github.com/a-marcel/hassio-addon-owntone) in order to use this addon properly.
+
 ## Configuration
+
+You can change the paths for the pipes that will be created during the startup. Please make sure that they are in a path that is accessible to owntone. By default owntone has access to `/share/owntone/music` and this addons creates a `librespot-java` and `librespot-java.metadata` pipe in this directory.
 
 During the first startup a `config.toml` is automatically created. You can find it in your Home Assistant configuration folder inside a `librespot-player` folder.
 

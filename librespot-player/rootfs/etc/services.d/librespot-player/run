@@ -5,19 +5,39 @@
 # ==============================================================================
 
 
+bashio::log.info "Prepare librespot player..."
+
+#### VARIABLES ####
+
+PIPE_PATH=$(bashio::config 'pipe')
+METADATA_PIPE_PATH=$(bashio::config 'metadatapipe')
+
+#### PIPES ####
+
+bashio::log.info "Creating pipes..."
+
+if [ -p "$PIPE_PATH" ]; then
+    rm -f "$PIPE_PATH"
+fi
+
+if [ -p "$METADATA_PIPE_PATH" ]; then
+    rm -f "$METADATA_PIPE_PATH"
+fi
+
+if [ -n "$PIPE_PATH" ]; then
+    mkdir -p "$(dirname "$PIPE_PATH")"
+    mkfifo "$PIPE_PATH"
+fi
+
+if [ -n "$METADATA_PIPE_PATH" ]; then
+    mkdir -p "$(dirname "$METADATA_PIPE_PATH")"
+    mkfifo "$METADATA_PIPE_PATH"
+fi
+
+#### librespot-player ####
+
 bashio::log.info "Starting librespot player..."
 
-mkdir -p /config/librespot-player /share/owntone/music/
-
-if [ -p /share/owntone/music/librespot-java ]; then
-    rm /share/owntone/music/librespot-java
-fi
-
-if [ -p /share/owntone/music/librespot-java.metadata ]; then
-    rm /share/owntone/music/librespot-java.metadata
-fi
-
-mkfifo /share/owntone/music/librespot-java
-mkfifo /share/owntone/music/librespot-java.metadata
+mkdir -p /config/librespot-player
 
 exec java -jar /bin/librespot-player.jar --conf-file=/config/librespot-player/config.toml
