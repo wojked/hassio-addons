@@ -2,7 +2,7 @@
 name: librespot player
 version: 1.1.1
 slug: librespot-player
-description: Example add-on by Community Home Assistant Add-ons
+description: Use Spotify Connect together with owntone
 url: https://github.com/AlexanderBabel/hassio-addons
 init: true
 host_network: true
