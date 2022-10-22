@@ -1,5 +1,5 @@
 name: OwnTone Server
-version: 28.5
+version: 28.5-ls94
 slug: owntone-server
 description: OwnTone is a Linux/FreeBSD DAAP (iTunes) media server with support for AirPlay devices, Apple Remote (and compatibles), MPD, Spotify, Chromecast, mp3 streaming and internet radio. It allows you to share your music collection over the local network.
 arch:
@@ -34,4 +34,4 @@ ingress_port: 3689
 webui: http://[HOST]:[PORT:3689]/
 startup: application
 boot: auto
-image: alexbabel/owntone:28.5-ls94
+image: alexbabel/owntone
