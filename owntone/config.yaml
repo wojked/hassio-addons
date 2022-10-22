@@ -30,6 +30,7 @@ hassio_api: false
 auth_api: true
 hassio_role: "default"
 audio: false
+init: false
 ingress_port: 3689
 webui: http://[HOST]:[PORT:3689]/
 startup: application
