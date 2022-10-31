@@ -12,9 +12,13 @@ The addon can be installed by adding this repo to Home Assistant. After that Own
 
 ## Configuration
 
+(You can use the VSCode addon to customize the configuration.)
+
 You can configure OwnTone through it's configuration file. It can be found at `/config/owntone/owntone.conf`.
 
 Librespot-java is configurable through it's configuration file at `/config/owntone/librespot-java.toml`
+
+After adjusting something, please restart the addon.
 
 ## Access OwnTone
 

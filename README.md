@@ -4,7 +4,7 @@ Here you can find Hass.io addons that I use/created.
 
 Currently maintained:
 - Backup S3
-- OwnTone Server
+- HomePod Connect (OwnTone + librespot-java)
 
 Old addons:
 - librespot player

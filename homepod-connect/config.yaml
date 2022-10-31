@@ -1,0 +1,22 @@
+name: HomePod Connect
+version: 28.5-ls94
+slug: homepod-connect
+description: Play Spotify music on your HomePods through Spotify Connect. Powered by OwnTone and librespot-java.
+arch:
+  - aarch64
+  - amd64
+map:
+  - config:rw
+host_network: true
+host_dbus: false
+host_ipc: false
+hassio_api: false
+auth_api: true
+hassio_role: "default"
+audio: false
+init: false
+startup: application
+boot: auto
+image: alexbabel/owntone
+webui: http://[HOST]:[PORT:3689]
+stage: experimental
