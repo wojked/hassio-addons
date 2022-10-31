@@ -1,4 +1,4 @@
-# OwntTone Server
+# HomePod Connect
 
 This addons allows to use OwnTone and Spotify Connect with librespot-java on Home Assistant OS.
 
