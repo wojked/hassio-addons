@@ -23,3 +23,9 @@ After adjusting something, please restart the addon.
 ## Access OwnTone
 
 You can access OwnTone through `[Home Assistant IP]:3689`
+
+## OwnTone Credentials
+
+Username: `admin`
+
+Password: `owntoneadmin8765`
