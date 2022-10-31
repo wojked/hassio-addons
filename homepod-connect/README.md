@@ -1,6 +1,6 @@
 # HomePod Connect
 
-This addons allows you to stream music directly to your HomePods from Spotify. (A Spotify Premium account is required)
+This addons allows you to stream music directly to your HomePods from Spotify.
 
 ## Requirements
 - A Spotify Premium account
