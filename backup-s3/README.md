@@ -4,13 +4,11 @@ Add-on for uploading hass.io backups to AWS S3.
 
 ## Installation
 
-Under the Add-on Store tab in the Hass.io Supervisor view in HA add this repo as an add-on repository: `https://github.com/AlexanderBabel/hassio-addons`.
-
-Or click this button below:
+Add this add-on by clicking on this link:
 
 [![Open your Home Assistant instance and show the dashboard of a Supervisor add-on.](https://my.home-assistant.io/badges/supervisor_addon.svg)](https://my.home-assistant.io/redirect/supervisor_addon/?addon=63120367_backup-s3&repository_url=https%3A%2F%2Fgithub.com%2FAlexanderBabel%2Fhassio-addons)
 
-Install, then set the config variables that you obtained from setting up the AWS account, user and bucket (see below):
+After installation, set the config variables that you obtained from setting up the AWS account, user and bucket (see below):
 awskey: `access key id`
 awssecret: `secret access key`
 bucketname: `AWS S3 bucket name`
