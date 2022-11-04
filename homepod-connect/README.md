@@ -1,6 +1,6 @@
 # HomePod Connect
 
-This addons allows you to stream music directly to your HomePods from Spotify.
+This add-on allows you to stream music directly to your HomePods from Spotify.
 
 You can find more details on the [Home Assistant Community post](https://community.home-assistant.io/t/homepod-connect-spotify-on-homepods-with-spotify-connect/482227) and in the Documentation tab.
 
