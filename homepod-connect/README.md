@@ -13,7 +13,7 @@ You can find more details on the [Home Assistant Community post](https://communi
 - VSCode addon or any other text editor to edit the configuration
 
 ## Comfort features
-Additionally to this addon, I recommend to use the Home Assistant OwnTone integration. With that, you can control which HomePod should play music.
+Additionally to this addon, I recommend to use the Home Assistant OwnTone integration. With that, you can control which HomePod should play music.  [![Open your Home Assistant instance and start setting up a new integration.](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=forked_daapd)
 
 <!-- Second, there is a blueprint that allows you to automatically play music in a room as soon as someone enters it.
 You can find it in the Home Assistant Community. -->
