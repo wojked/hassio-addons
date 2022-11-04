@@ -1,4 +1,4 @@
-# Hassio Addons
+# Hass.io Add-ons by AlexanderBabel
 
 Here you can find Hass.io addons that I use/created.
 
