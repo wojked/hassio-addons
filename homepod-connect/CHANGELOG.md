@@ -1,5 +1,10 @@
 # Changelog
 
+## [28.5-ls100] - 2023-01-23
+### Upstream
+- Update to linuxserver/daapd:28.5-ls100
+
+
 ## [28.5-ls96] - 2022-11-25
 ### Added
 - Add automatic mount of the /media directory
