@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/hassio-addons/base/aarch64:11.0.0
+ARG BUILD_FROM=ghcr.io/hassio-addons/base/aarch64:13.1.4
 FROM ${BUILD_FROM}
 
 ENV LANG C.UTF-8
