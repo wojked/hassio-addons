@@ -1,5 +1,13 @@
 # Changelog
 
+## [28.6-ls106] - 2023-03-26
+### Upstream
+- Update to linuxserver/daapd:28.6-ls106
+
+### Bug fixes
+- owntone.conf is no longer overwritten
+
+
 ## [28.6-ls105] - 2023-03-07
 ### Upstream
 - Update to linuxserver/daapd:28.6-ls105
