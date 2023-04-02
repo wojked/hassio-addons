@@ -1,19 +1,19 @@
----
 name: Backup S3
-version: 2.5.3
+version: 2.5.4
 slug: backup-s3
 description: Sync your Home Assistant Supervisor Backups with S3
 url: https://github.com/AlexanderBabel/hassio-addons
 startup: once
 boot: auto
-map:
-  - backup:rw
+init: false
 arch:
   - aarch64
   - amd64
   - armhf
   - armv7
   - i386
+map:
+  - backup:rw
 options:
   awskey: My-Access-Key
   awssecret: ""
