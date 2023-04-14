@@ -34,19 +34,15 @@ The policy should look something like:
     "Version": "2012-10-17",
     "Statement": [
         {
-            "Sid": "VisualEditor0",
             "Effect": "Allow",
             "Action": [
-                "s3:PutObject",
-                "s3:AbortMultipartUpload",
-                "s3:DeleteObjectVersion",
-                "s3:ListBucket",
                 "s3:DeleteObject",
-                "s3:ListMultipartUploadParts"
+                "s3:GetObject",
+                "s3:ListBucket",
+                "s3:PutObject"
             ],
             "Resource": [
-                "arn:aws:s3:::MYBUCKETHERE",
-                "arn:aws:s3:::MYBUCKETHERE/*"
+                "arn:aws:s3:::MY_BUCKET_HERE/*"
             ]
         }
     ]
@@ -60,32 +56,32 @@ To sync your HASSIO backup folder with AWS just click START in this add-on. It w
 You could automate this using Automation:
 
 ```yaml
-# backups
 - alias: Make backup
   trigger:
-    platform: time
-    at: "3:00:00"
+    - platform: time
+      at: "03:30:00"
   condition:
-    condition: time
-    weekday:
-      - mon
+    - condition: time
+      weekday:
+        - mon
   action:
-    service: hassio.backup_full
-    data_template:
-      name: Automated Backup {{ now().strftime('%Y-%m-%d') }}
+    - service: hassio.backup_full
+      data_template:
+        name: "WeeklyBackup: ha-{{ now().strftime('%Y-%m-%d') }}"
+  mode: single
 
 - alias: Upload to S3
   trigger:
-    platform: time
-    at: "3:30:00"
+    - platform: time
+      at: "03:30:00"
   condition:
-    condition: time
-    weekday:
-      - mon
+    - condition: time
+      weekday:
+        - mon
   action:
-    service: hassio.addon_start
-    data:
-      addon: local_backup_s3
+    - service: hassio.addon_start
+      data:
+        addon: 63120367_backup-s3
 ```
 
 The automation above first makes a backup at 3am, and then at 3.30am uploads to S3.
@@ -102,3 +98,90 @@ I really like this community integration too:
 Once installed, it can be easily adapted to run alongside this addon.
 
 Credits: Based on jperquin/hassio-backup-s3 based on rrostt/hassio-backup-s3
+
+Advanced automation with auto backup:
+
+```yaml
+- alias: "[Backup] Create Backup"
+  description: ""
+  trigger:
+    - platform: time
+      at: "02:30:00"
+  condition:
+    - condition: time
+      weekday:
+        - mon
+  action:
+    - service: auto_backup.backup
+      data:
+        name: "WeeklyBackup: ha-{{ now().strftime('%Y-%m-%d-%H-%M-%S') }}"
+        exclude_folders:
+          - share
+        password: PASSWORD_HERE
+        keep_days: 1
+  mode: single
+
+- alias: "[Backup] Handle Events"
+  description: ""
+  trigger:
+    - platform: event
+      event_type: auto_backup.backup_start
+      id: start
+    - platform: event
+      event_type: auto_backup.backup_successful
+      id: successful
+    - platform: event
+      event_type: auto_backup.backup_failed
+      id: failed
+  condition: []
+  action:
+    - choose:
+        - conditions:
+            - condition: trigger
+              id: start
+          sequence:
+            - service: rest_command.backup_start
+              data: {}
+        - conditions:
+            - condition: trigger
+              id: successful
+          sequence:
+            - service: hassio.addon_start
+              data:
+                addon: 63120367_backup-s3
+        - conditions:
+            - condition: trigger
+              id: failed
+          sequence:
+            - service: rest_command.backup_failed
+              data: {}
+            - service: persistent_notification.create
+              data:
+                title: Snapshot Failed.
+                message: |-
+                  Name: {{ trigger.event.data.name }}
+                  Error: {{ trigger.event.data.error }}
+      default: []
+  mode: single
+```
+
+The first automation starts the backup process. Afterwards the second automation handles events issued during the backup process. As soon as the backup starts, a call is made to healthchecks.io to track the starting point of a backup. If the backups fails another ping is made. If the backup succeeds, then the backup-s3 addon is started.
+
+The following rest commands are set in the configuration.yaml:
+```yaml
+rest_command:
+  backup_start:
+    url: !secret https://hc-ping.com/HEALTH_CHECK_UUID/start
+    method: GET
+    headers:
+      accept: "application/json, text/html"
+      user-agent: "HomeAssistant/{{ state_attr('update.home_assistant_core_update', 'installed_version') }}"
+    verify_ssl: true
+  backup_failed:
+    url: https://hc-ping.com/HEALTH_CHECK_UUID/fail
+    method: GET
+    headers:
+      accept: "application/json, text/html"
+      user-agent: "HomeAssistant/{{ state_attr('update.home_assistant_core_update', 'installed_version') }}"
+    verify_ssl: true
+```
