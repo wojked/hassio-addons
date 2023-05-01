@@ -1,5 +1,10 @@
 # Changelog
 
+## [28.6-ls110] - 2023-05-02
+### Upstream
+- Update to linuxserver/daapd:28.6-ls110
+
+
 ## [28.6-ls106] - 2023-03-26
 ### Upstream
 - Update to linuxserver/daapd:28.6-ls106
